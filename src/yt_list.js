@@ -2,11 +2,13 @@
 console.log("Start");
 document.querySelector("#holotools")
         .addEventListener("click", run_holotool);
-let chrome = browser;
+
+// fireofx
+if(typeof chrome === "undefined")
+    var chrome = browser;
 
 // Search youtube link in tab
-chrome.tabs.executeScript({file: "get_yt_url.js"})
-.then((links) => {
+chrome.tabs.executeScript({file: "get_yt_url.js"}, (links) => {
     links = JSON.parse(links[0]);
     links.forEach((link) => {
         let main = document.querySelector("#links");
