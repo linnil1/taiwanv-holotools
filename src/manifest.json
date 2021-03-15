@@ -2,7 +2,7 @@
   "name": "taiwanv-holotools",
   "description": "Open youtube links via holotools",
   "manifest_version": 2,
-  "version": "1.0",
+  "version": "1.0.7",
   "homepage_url": "https://github.com/linnil1/taiwanv-holotools",
   "permissions": [
     "activeTab"
@@ -14,5 +14,10 @@
     "default_icon": "images/linnil1.png",
     "default_title": "taiwanv-holotools",
     "default_popup": "yt_list.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{dec5367e-26e6-4d28-b55f-b52fd91fccc5}"
+    }
   }
 }
