@@ -1,0 +1,50 @@
+name: Package the extension
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "web-ext lint"
+        id: web-ext-lint
+        uses: kewisch/action-web-ext@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          cmd: lint
+          source: src
+          channel: unlisted
+
+      - name: "web-ext build"
+        id: web-ext-build
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: build
+          source: src
+
+      - name: "web-ext sign"
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+          source: ${{ steps.web-ext-build.outputs.target }}
+          channel: unlisted
+          apiKey: ${{ secrets.AMO_SIGN_KEY }}
+          apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
+          timeout: 900000
+
+      - name: "Create Release"
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: latest
+          tag_name: latest
+          files: |
+              ${{ steps.web-ext-sign.outputs.target }}
+              ${{ steps.web-ext-build.outputs.target }}
