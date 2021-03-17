@@ -26,7 +26,7 @@ chrome.tabs.executeScript({file: "get_yt_url.js"}, (links) => {
                             .replaceAll("\t", " ")
                             .replaceAll("\n", " ")
                             .replace(/ +(?= )/g, "");
-        div_label.textContent = text.slice(0, 30) + "...";
+        div_label.textContent = text;
         main.appendChild(div_label);
 
         // break
